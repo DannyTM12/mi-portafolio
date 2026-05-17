@@ -460,6 +460,16 @@ strong {
   flex-shrink: 0;
 }
 
+.site-header__logo-avatar {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+  border: 1px solid var(--color-border);
+}
+
 .site-header__logo-name {
   font-family: var(--font-display);
   font-size: var(--text-sm);
