@@ -682,6 +682,16 @@ strong {
   animation: fade-in var(--duration-reveal) var(--ease-out) 0.5s forwards;
 }
 
+.hero__avatar {
+  width: clamp(140px, 18vw, 220px);
+  height: clamp(140px, 18vw, 220px);
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--color-border);
+  object-fit: cover;
+  display: block;
+  box-shadow: var(--shadow-lg);
+}
+
 .hero__avatar-placeholder {
   width: clamp(140px, 18vw, 220px);
   height: clamp(140px, 18vw, 220px);
@@ -713,6 +723,22 @@ strong {
   letter-spacing: -0.04em;
   position: relative;
   z-index: 1;
+}
+
+/* About avatar */
+.about__figure {
+  flex-shrink: 0;
+  margin-bottom: var(--space-12);
+}
+
+.about__avatar {
+  width: clamp(160px, 20vw, 240px);
+  height: clamp(160px, 20vw, 240px);
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--color-border);
+  object-fit: cover;
+  display: block;
+  box-shadow: var(--shadow-lg);
 }
 
 /* Scroll hint */
