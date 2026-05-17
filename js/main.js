@@ -97,38 +97,48 @@ document.addEventListener('DOMContentLoaded', () => {
     const feedbackDiv = document.getElementById('contact-feedback');
 
     if (contactForm && feedbackDiv) {
-        contactForm.addEventListener('submit', (e) => {
-            // Evitar que la página se recargue al enviar
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // Referencias a los campos
             const name = document.getElementById('contact-name').value.trim();
             const email = document.getElementById('contact-email').value.trim();
             const message = document.getElementById('contact-message').value.trim();
             const submitBtn = document.getElementById('contact-submit');
 
-            // Validación muy básica (HTML5 ya hace gran parte del trabajo por los atributos 'required')
             if (name === '' || email === '' || message === '') {
                 showFeedback('Por favor, completa todos los campos.', 'error');
                 return;
             }
 
-            // Simulación de estado de carga
             const originalBtnContent = submitBtn.innerHTML;
             submitBtn.innerHTML = '<span class="btn__label">Enviando...</span>';
             submitBtn.disabled = true;
             submitBtn.style.cursor = 'wait';
 
-            // Simulamos el tiempo de envío al servidor (1.5 segundos)
-            setTimeout(() => {
-                showFeedback('¡Gracias por tu mensaje! Me pondré en contacto contigo muy pronto.', 'success');
-                
-                // Limpiar el formulario y restaurar el botón
-                contactForm.reset();
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: new FormData(contactForm),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    contactForm.reset();
+                    showFeedback('¡Gracias por tu mensaje! Me pondré en contacto contigo muy pronto.', 'success');
+                } else {
+                    const data = await response.json().catch(() => null);
+                    const errorMessage = data?.error || 'Hubo un error al enviar el mensaje. Intenta de nuevo.';
+                    showFeedback(errorMessage, 'error');
+                }
+            } catch (error) {
+                showFeedback('No se pudo enviar el formulario. Revisa tu conexión e inténtalo otra vez.', 'error');
+            } finally {
                 submitBtn.innerHTML = originalBtnContent;
                 submitBtn.disabled = false;
                 submitBtn.style.cursor = 'pointer';
-            }, 1500);
+            }
         });
     }
 
