@@ -91,13 +91,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* --------------------------------------------------------------------------
-       4. MANEJO DEL FORMULARIO DE CONTACTO
+       4. MANEJO DEL FORMULARIO DE CONTACTO (VERSIÓN REAL CON FORMSPREE)
        -------------------------------------------------------------------------- */
     const contactForm = document.getElementById('contact-form');
     const feedbackDiv = document.getElementById('contact-feedback');
 
     if (contactForm && feedbackDiv) {
         contactForm.addEventListener('submit', async (e) => {
+            // Evitamos que te mande a la página fea de Formspree
             e.preventDefault();
 
             const name = document.getElementById('contact-name').value.trim();
@@ -110,14 +111,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            // Estado de carga visual
             const originalBtnContent = submitBtn.innerHTML;
             submitBtn.innerHTML = '<span class="btn__label">Enviando...</span>';
             submitBtn.disabled = true;
             submitBtn.style.cursor = 'wait';
 
+            // ENVÍO REAL A FORMSPREE
             try {
                 const response = await fetch(contactForm.action, {
-                    method: 'POST',
+                    method: contactForm.method,
                     body: new FormData(contactForm),
                     headers: {
                         'Accept': 'application/json'
@@ -125,16 +128,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (response.ok) {
-                    contactForm.reset();
                     showFeedback('¡Gracias por tu mensaje! Me pondré en contacto contigo muy pronto.', 'success');
+                    contactForm.reset();
                 } else {
-                    const data = await response.json().catch(() => null);
-                    const errorMessage = data?.error || 'Hubo un error al enviar el mensaje. Intenta de nuevo.';
-                    showFeedback(errorMessage, 'error');
+                    showFeedback('Hubo un problema al enviar el mensaje. Revisa tu red.', 'error');
                 }
             } catch (error) {
-                showFeedback('No se pudo enviar el formulario. Revisa tu conexión e inténtalo otra vez.', 'error');
+                showFeedback('Error de conexión. Intenta de nuevo más tarde.', 'error');
             } finally {
+                // Restauramos el botón
                 submitBtn.innerHTML = originalBtnContent;
                 submitBtn.disabled = false;
                 submitBtn.style.cursor = 'pointer';
@@ -142,14 +144,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Función auxiliar para mostrar el mensaje de éxito o error
+    // Función auxiliar para mostrar el mensaje
     function showFeedback(message, type) {
         feedbackDiv.textContent = message;
-        // Asignamos las clases correspondientes (definidas en el CSS)
         feedbackDiv.className = `contact-form__feedback contact-form__feedback--${type}`;
         feedbackDiv.hidden = false;
 
-        // Ocultar el mensaje automáticamente después de 6 segundos
         setTimeout(() => {
             feedbackDiv.hidden = true;
         }, 6000);
