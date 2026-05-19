@@ -65,18 +65,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* --------------------------------------------------------------------------
-       2.1. TOGGLE DE IDIOMA
+       2.1. TOGGLE DE IDIOMA (Traducción en tiempo real)
        -------------------------------------------------------------------------- */
     const langToggleBtn = document.getElementById('lang-toggle');
+    // Seleccionamos todos los elementos que tengan traducciones disponibles
+    const translatableElements = document.querySelectorAll('[data-en]');
+
     if (langToggleBtn) {
+        // Revisamos si el usuario ya había elegido un idioma antes, si no, por defecto español
+        let currentLang = localStorage.getItem('language') || 'es';
+
+        // Función que se encarga de cambiar todo el texto
+        const applyLanguage = (lang) => {
+            translatableElements.forEach(el => {
+                // Reemplaza el contenido HTML por el que está en el atributo (data-es o data-en)
+                if (el.hasAttribute(`data-${lang}`)) {
+                    el.innerHTML = el.getAttribute(`data-${lang}`);
+                }
+            });
+
+            // Actualiza el texto del botón (si estamos en 'es', el botón dice 'EN' para invitar a cambiar)
+            langToggleBtn.textContent = lang === 'es' ? 'EN' : 'ES';
+
+            // Buenas prácticas: actualizar el atributo lang del <html> y guardar la preferencia
+            document.documentElement.lang = lang;
+            localStorage.setItem('language', lang);
+        };
+
+        // Aplicar el idioma inicial al cargar la página
+        applyLanguage(currentLang);
+
+        // Evento para cambiar el idioma al hacer clic
         langToggleBtn.addEventListener('click', () => {
-            // La forma más robusta sin frameworks es redirigir a una versión en inglés
-            // Si tu archivo se llama index_en.html, descomenta la siguiente línea:
-            // window.location.href = window.location.pathname.includes('_en') ? 'index.html' : 'index_en.html';
-            
-            // Efecto visual temporal si aún no tienes el archivo creado:
-            const currentLang = langToggleBtn.textContent;
-            langToggleBtn.textContent = currentLang === 'EN' ? 'ES' : 'EN';
+            currentLang = currentLang === 'es' ? 'en' : 'es';
+            applyLanguage(currentLang);
         });
     }
 
