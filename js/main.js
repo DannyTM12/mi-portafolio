@@ -65,6 +65,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* --------------------------------------------------------------------------
+       2.1. TOGGLE DE IDIOMA
+       -------------------------------------------------------------------------- */
+    const langToggleBtn = document.getElementById('lang-toggle');
+    if (langToggleBtn) {
+        langToggleBtn.addEventListener('click', () => {
+            // La forma más robusta sin frameworks es redirigir a una versión en inglés
+            // Si tu archivo se llama index_en.html, descomenta la siguiente línea:
+            // window.location.href = window.location.pathname.includes('_en') ? 'index.html' : 'index_en.html';
+            
+            // Efecto visual temporal si aún no tienes el archivo creado:
+            const currentLang = langToggleBtn.textContent;
+            langToggleBtn.textContent = currentLang === 'EN' ? 'ES' : 'EN';
+        });
+    }
+
+    /* --------------------------------------------------------------------------
        3. ANIMACIONES AL SCROLL (Intersection Observer)
        -------------------------------------------------------------------------- */
     // Añadimos dinámicamente la clase 'reveal' a los elementos importantes
