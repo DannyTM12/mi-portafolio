@@ -198,4 +198,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 6000);
     }
 
+    // Añadir clase `site-header--scrolled` al hacer scroll
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('.site-header');
+        if (header) {
+            header.classList.toggle('site-header--scrolled', window.scrollY > 10);
+        }
+    });
+
 });
