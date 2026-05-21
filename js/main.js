@@ -84,6 +84,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
+            // Actualizar placeholder de inputs y textareas con atributos data-placeholder-es/data-placeholder-en
+            const placeholderSelector = 'input[data-placeholder-es], input[data-placeholder-en], textarea[data-placeholder-es], textarea[data-placeholder-en]';
+            const placeholderElements = document.querySelectorAll(placeholderSelector);
+            placeholderElements.forEach(el => {
+                const attr = `data-placeholder-${lang}`;
+                if (el.hasAttribute(attr)) {
+                    el.placeholder = el.getAttribute(attr);
+                }
+            });
+
             // Actualiza el texto del botón (si estamos en 'es', el botón dice 'EN' para invitar a cambiar)
             langToggleBtn.textContent = lang === 'es' ? 'EN' : 'ES';
 
