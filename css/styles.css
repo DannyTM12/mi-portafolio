@@ -831,6 +831,12 @@ strong {
   align-items: start;
 }
 
+.about__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
 .about__paragraph {
   font-size: var(--text-md);
   line-height: 1.8;
