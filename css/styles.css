@@ -1664,3 +1664,35 @@ strong {
     justify-content: center;
   }
 }
+/* --- Botón Volver Arriba --- */
+.back-to-top {
+  position: fixed;
+  bottom: var(--space-8);
+  right: var(--space-4);
+  z-index: 90;
+  width: 3rem;
+  height: 3rem;
+  padding: 0; /* Sobrescribe el padding base de .btn */
+  border-radius: var(--radius-full);
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: 
+    opacity var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out),
+    visibility var(--duration-base);
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+@media (min-width: 900px) {
+  .back-to-top {
+    right: var(--space-8);
+  }
+}

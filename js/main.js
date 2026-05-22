@@ -208,6 +208,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 6000);
     }
 
+    /* --------------------------------------------------------------------------
+       5. BOTÓN VOLVER ARRIBA
+       -------------------------------------------------------------------------- */
+    const backToTopBtn = document.getElementById('back-to-top');
+
+    if (backToTopBtn) {
+        // Mostrar/ocultar el botón basado en el scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backToTopBtn.classList.add('is-visible');
+            } else {
+                backToTopBtn.classList.remove('is-visible');
+            }
+        });
+
+        // Acción de scroll hacia arriba
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
     // Añadir clase `site-header--scrolled` al hacer scroll
     window.addEventListener('scroll', () => {
         const header = document.querySelector('.site-header');

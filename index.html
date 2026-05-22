@@ -154,7 +154,12 @@
 
           <!-- Foto de perfil -->
           <figure class="hero__visual">
-            <img src="assets/img/avatar.png" alt="Carlos Daniel Torres Macías" class="hero__avatar">
+            <img
+              src="assets/img/avatar.png"
+              alt="Carlos Daniel Torres Macías"
+              class="hero__avatar"
+              onerror="this.outerHTML=`<div class='hero__avatar-placeholder'><span class='hero__avatar-initials'>DT</span></div>`"
+            >
           </figure>
 
         </div>
@@ -186,7 +191,13 @@
             <div class="about__main">
               <!-- Foto de perfil -->
               <figure class="about__figure">
-                <img src="assets/img/avatar.jpg" alt="Carlos Daniel Torres Macías" class="about__avatar">
+                <img 
+                  src="assets/img/avatar.jpg" 
+                  alt="Carlos Daniel Torres Macías" 
+                  class="about__avatar" 
+                  loading="lazy" 
+                  onerror="this.style.display='none'"
+                >
               </figure>
 
               <div class="about__text">
@@ -666,6 +677,13 @@
     <script>
       document.getElementById('footer-year').textContent = new Date().getFullYear();
     </script>
+
+    <!-- Botón Volver arriba -->
+    <button id="back-to-top" class="btn btn--primary back-to-top" aria-label="Volver arriba">
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 19V5M5 12l7-7 7 7"/>
+      </svg>
+    </button>
 
   </body>
 </html>
